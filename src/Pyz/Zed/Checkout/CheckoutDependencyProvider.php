@@ -41,6 +41,8 @@ use Spryker\Zed\ShipmentCheckoutConnector\Communication\Plugin\Checkout\Shipment
 
 class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
 {
+    public const FACADE_QUOTE = 'FACADE_QUOTE';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -121,4 +123,32 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new SalesOrderExpanderPlugin(),
         ];
     }
+
+/**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addQuoteFacade($container);
+        return $container;
+    }
+
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
+            return $container->getLocator()->quote()->facade();
+        });
+
+        return $container;
+    }
+
 }
