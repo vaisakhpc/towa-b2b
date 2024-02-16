@@ -1,10 +1,23 @@
 {% extends view('summary', '@SprykerShop:CheckoutPage') %}
 
 {% define data = {
-    stepNumder: 4,
+    stepNumder: 5,
 } %}
 
 {% block content %}
+    <div class="grid grid--gap">
+        <div class="col col--sm-12 col--lg-12">
+            {% include molecule('summary-item-box', 'CheckoutPage') with {
+                modifiers: ['mobile-border-top'],
+                data: {
+                    title: 'checkout.step.order.details' | trans,
+                    orderName: data.cart.orderName,
+                    editUrl: 'checkout-order-name',
+                    canEdit: true,
+                },
+            } only %}
+        </div>
+    </div>
     {% for shipmentGroup in data.shipmentGroups %}
         <article class="grid grid--gap spacing-bottom spacing-bottom--big">
             <h3 class="col col--sm-12 title title--second spacing-bottom spacing-bottom--small">

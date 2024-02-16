@@ -1,0 +1,56 @@
+
+{% extends template('page-layout-checkout', 'CheckoutPage') %}
+
+{% define data = {
+	backUrl: _view.previousStepUrl,
+	forms: {
+		orderName: _view.orderNameForm
+	},
+    stepNumder: 1,
+	title: 'checkout.step.order.details' | trans
+} %}
+
+{% block content %}
+    <h5 class="title title--second">{{ 'checkout.step.order.details.name' | trans }}</h5>
+    {% set jsAddressClass = 'js-address' %}
+	{% embed molecule('form') with {
+		modifiers: ['checkout-form'],
+		data: {
+			form: data.forms.orderName,
+            backUrl: data.backUrl,
+			options: {
+				attr: {
+					id: 'order-name-form'
+				}
+			},
+			submit: {
+				enable: true,
+				text: 'checkout.step.payment' | trans,
+                class: 'button button--big spacing-top spacing-top--big ' ~ jsAddressClass ~ '__form-submit',
+			},
+		},
+	} only %}
+        {% block title %}{% endblock %}
+		{% block fields %}
+            <div class="grid grid--bottom spacing-bottom spacing-bottom--big col col--sm-12">
+            {{ parent() }}
+            </div>
+		{% endblock %}
+        {% block actions %}
+        <div class="grid grid--middle grid--justify grid--expand">
+        <div class="spacing-top col col--sm-12 text-left">
+            <div class="grid grid--middle">
+                <div class="col">
+                    {% widget 'QuoteRequestActionsWidget' args [data.form.vars.value, data.backUrl] only %}
+                        {% block saveButton %}{% endblock %}
+                        {% block backButton %}{% endblock %}
+                    {% endwidget %}
+
+                    {{ parent() }}
+                </div>
+            </div>
+            </div>
+            </div>
+        {% endblock %}
+	{% endembed %}
+{% endblock %}

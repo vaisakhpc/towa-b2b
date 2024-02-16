@@ -10,6 +10,7 @@
     address: {},
     iconName: '',
     editUrl: '',
+    orderName: '',
     canEdit: false,
 } %}
 
@@ -43,7 +44,11 @@
             } only %}
         {% endif %}
     {% endif %}
-
+    {% if data.orderName %}
+            <span class="{{ config.name }}__method">
+                {{ 'checkout.step.order.details.name.label' | trans }} : {{ data.orderName | capitalize }}
+            </span>
+    {% endif %}
     {% if data.address %}
         {% include molecule('display-address') with {
             data: {

@@ -46,6 +46,8 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
      */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 
+    public const CLIENT_CHECKOUT_PYZ = 'CLIENT_CHECKOUT_PYZ';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -55,6 +57,20 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
     {
         $container = parent::provideDependencies($container);
         $container = $this->extendPaymentMethodHandler($container);
+        $container = $this->addPyzCheckoutClient($container);
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPyzCheckoutClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CHECKOUT_PYZ, function (Container $container) {
+            return $container->getLocator()->checkout()->client();
+        });
 
         return $container;
     }
