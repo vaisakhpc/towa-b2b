@@ -27,6 +27,11 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
      * @var array<\SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface>
      */
     protected $checkoutAddressStepEnterPreCheckPlugins;
+
+     /**
+     * @var array<\Pyz\Yves\CheckoutPage\Plugin\CheckoutOrderNameStepEnterPreCheckPluginInterface>
+     */
+    protected $checkoutOrderNameStepEnterPreCheckPlugins;
     
       /**
      * @var \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface
@@ -44,7 +49,8 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
         PostConditionCheckerInterface $postConditionChecker,
         $stepRoute,
         $escapeRoute,
-        array $checkoutAddressStepEnterPreCheckPlugins
+        array $checkoutAddressStepEnterPreCheckPlugins,
+        array $checkoutOrderNameStepEnterPreCheckPlugins,
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
@@ -52,6 +58,7 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
         $this->stepExecutor = $stepExecutor;
         $this->postConditionChecker = $postConditionChecker;
         $this->checkoutAddressStepEnterPreCheckPlugins = $checkoutAddressStepEnterPreCheckPlugins;
+        $this->checkoutOrderNameStepEnterPreCheckPlugins = $checkoutOrderNameStepEnterPreCheckPlugins;
     }
 
     /**
@@ -82,7 +89,7 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        if (!$this->executeCheckoutAddressStepEnterPreCheckPlugins($quoteTransfer)) {
+        if (!$this->executeCheckoutAddressStepEnterPreCheckPlugins($quoteTransfer) || !$this->executeCheckoutOrderNameStepEnterPreCheckPlugins($quoteTransfer)) {
             return $quoteTransfer;
         }
         $quoteTransfer = $this->stepExecutor->execute($request, $quoteTransfer);
@@ -131,6 +138,17 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
     {
         foreach ($this->checkoutAddressStepEnterPreCheckPlugins as $checkoutAddressStepEnterPreCheckPlugin) {
             if (!$checkoutAddressStepEnterPreCheckPlugin->check($quoteTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected function executeCheckoutOrderNameStepEnterPreCheckPlugins(AbstractTransfer $quoteTransfer): bool
+    {
+        foreach ($this->checkoutOrderNameStepEnterPreCheckPlugins as $checkoutOrderNameStepEnterPreCheckPlugin) {
+            if (!$checkoutOrderNameStepEnterPreCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }

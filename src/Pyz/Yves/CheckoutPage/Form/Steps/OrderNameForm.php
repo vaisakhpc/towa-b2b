@@ -6,6 +6,8 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Pyz\Yves\CheckoutPage\CheckoutPageConfig;
 
 class OrderNameForm extends AbstractType
 {
@@ -33,6 +35,7 @@ class OrderNameForm extends AbstractType
 			'property_path' => static::ORDER_NAME_PROPERTY_PATH,
 			'constraints' => [
 				new NotBlank(),
+				new Regex(CheckoutPageConfig::CHECKOUT_ORDER_NAME_REGEX_PATTERN, 'checkout.step.order.details.name.error'),
 			],
 			'label' => 'checkout.step.order.details.name.label',
 		]);

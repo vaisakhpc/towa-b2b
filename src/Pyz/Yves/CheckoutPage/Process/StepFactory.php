@@ -13,6 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 use Pyz\Client\Checkout\CheckoutClientInterface;
 use Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider;
+use Pyz\Yves\CheckoutPage\Plugin\CheckoutOrderNameStepEnterPreCheckPlugin;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -53,8 +54,19 @@ class StepFactory extends SprykerShopStepFactory
 			CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ORDER_NAME,
 			HomePageRouteProviderPlugin::ROUTE_NAME_HOME,
             $this->getCheckoutAddressStepEnterPreCheckPlugins(),
+            $this->getCheckoutOrderNameStepEnterPreCheckPlugins(),
 		);
 	}
+
+    /**
+	 * @return array<\Pyz\Yves\CheckoutPage\Plugin\CheckoutOrderNameStepEnterPreCheckPluginInterface>
+	 */
+    public function getCheckoutOrderNameStepEnterPreCheckPlugins()
+    {
+        return [
+            new CheckoutOrderNameStepEnterPreCheckPlugin(),
+        ];
+    }
 
     public function createOrderNameStepExecutor(): StepExecutorInterface
     {

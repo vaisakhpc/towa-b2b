@@ -875,6 +875,8 @@ checkout.step.order.details.name,Name your order,en_US
 checkout.step.order.details.name,Bestellung Benennen,de_DE
 checkout.step.order.details.name.label,Your Order,en_US
 checkout.step.order.details.name.label,Ihre Bestellung,de_DE
+checkout.step.order.details.name.error,Only lowercase characters and numbers are allowed!,en_US
+checkout.step.order.details.name.error,Es sind nur Kleinbuchstaben und Zahlen erlaubt!,de_DE
 checkout.back_button,Back to cart,en_US
 checkout.back_button,Zum Warenkorb,de_DE
 checkout.secure,Secure checkout,en_US

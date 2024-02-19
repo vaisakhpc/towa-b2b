@@ -11,6 +11,9 @@ use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig as SprykerCheckoutPageConfi
 
 class CheckoutPageConfig extends SprykerCheckoutPageConfig
 {
+
+    public const CHECKOUT_ORDER_NAME_REGEX_PATTERN = '/^[a-z0-9]+$/';
+
     /**
      * @return array<string>
      */
