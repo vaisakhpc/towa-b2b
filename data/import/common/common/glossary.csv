@@ -3425,6 +3425,8 @@ customer.order_history.active_filters,Active Filters:,en_US
 customer.order_history.active_filters,Aktive Filter:,de_DE
 customer.order_history.reset_all,Reset All,en_US
 customer.order_history.reset_all,Alles zurücksetzen,de_DE
+customer.order.name,Name,en_US
+customer.order.name,Namen,de_DE
 company_page.label.business_unit,Business Unit,en_US
 company_page.label.business_unit,Geschäftsbereich,de_DE
 company_page.choice.my_orders,My Orders,en_US
