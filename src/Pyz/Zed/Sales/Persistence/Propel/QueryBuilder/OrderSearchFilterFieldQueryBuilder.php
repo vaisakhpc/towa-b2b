@@ -11,6 +11,9 @@ use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQuer
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 
+/**
+ * Extending the Spryker's core class with the Pyz version
+ */
 class OrderSearchFilterFieldQueryBuilder extends SprykerOrderSearchFilterFieldQueryBuilder
 {
      /**

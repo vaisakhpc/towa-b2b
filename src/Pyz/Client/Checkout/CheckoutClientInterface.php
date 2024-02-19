@@ -7,11 +7,14 @@
 
 namespace Pyz\Client\Checkout;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 interface CheckoutClientInterface
 {
+    /**
+     * Interface for save order name method
+     * @param QuoteTransfer $quoteTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
     public function saveOrderName(QuoteTransfer $quoteTransfer);
 }

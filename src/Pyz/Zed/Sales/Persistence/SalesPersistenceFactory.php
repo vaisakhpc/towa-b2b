@@ -20,6 +20,7 @@ use Pyz\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBui
 class SalesPersistenceFactory extends SprykerSalesPersistenceFactory
 {
     /**
+     * Wrote to make sure that the Pyz version is returned from this method
      * @return \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilderInterface
      */
     public function createOrderSearchFilterFieldQueryBuilder(): OrderSearchFilterFieldQueryBuilderInterface

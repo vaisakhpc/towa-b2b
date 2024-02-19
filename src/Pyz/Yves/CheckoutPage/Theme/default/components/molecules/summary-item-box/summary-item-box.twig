@@ -35,7 +35,7 @@
         <span class="{{ config.name }}__method">
             {{ 'checkout.step.summary.with_method' | trans }} {{ data.method | capitalize }}
         </span>
-        {% if data.iconName %}
+        {% if data.iconName %}c
             {% include atom('icon') with {
                 modifiers: [data.iconName ~ '-logo-small'],
                 data: {
@@ -46,7 +46,7 @@
     {% endif %}
     {% if data.orderName %}
             <span class="{{ config.name }}__method">
-                {{ 'checkout.step.order.details.name.label' | trans }} : {{ data.orderName | capitalize }}
+                {{ 'checkout.step.order.details.name.label' | trans }} : {{ data.orderName }}
             </span>
     {% endif %}
     {% if data.address %}

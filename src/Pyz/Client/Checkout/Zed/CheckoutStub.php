@@ -7,11 +7,12 @@
 
 namespace Pyz\Client\Checkout\Zed;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClient;
 use Spryker\Client\Checkout\Zed\CheckoutStub as SprykerCheckoutStub;
 
+/**
+ * Extending the Spryker's core class with the Pyz version
+ */
 class CheckoutStub extends SprykerCheckoutStub implements CheckoutStubInterface
 {
  /**

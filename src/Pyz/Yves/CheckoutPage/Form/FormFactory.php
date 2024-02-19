@@ -7,7 +7,7 @@ use SprykerShop\Yves\CheckoutPage\Form\FormFactory as SprykerShopFormFactory;
 
 class FormFactory extends SprykerShopFormFactory
 {
-/**
+    /**
 	 * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
 	 */
 	public function createOrderNameFormCollection()

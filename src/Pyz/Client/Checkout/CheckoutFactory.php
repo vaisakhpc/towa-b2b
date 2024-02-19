@@ -7,12 +7,12 @@
 
 namespace Pyz\Client\Checkout;
 
-use Spryker\Client\Checkout\Quote\QuoteProceedCheckoutChecker;
-use Spryker\Client\Checkout\Quote\QuoteProceedCheckoutCheckerInterface;
 use Pyz\Client\Checkout\Zed\CheckoutStub;
-use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Checkout\CheckoutFactory as SprykerCheckoutFactory;
 
+/**
+ * Extending the Spryker's core CheckoutFactory with the Pyz version
+ */
 class CheckoutFactory extends SprykerCheckoutFactory
 {
     /**

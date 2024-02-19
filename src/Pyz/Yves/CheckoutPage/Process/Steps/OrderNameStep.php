@@ -9,7 +9,6 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\AbstractBaseStep;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
@@ -134,6 +133,11 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
         return !$this->requireInput($dataTransfer);
     }
 
+    /**
+     * method to check the initial validation which was used previously for address step
+     * @param AbstractTransfer $quoteTransfer
+     * @return bool
+     */
     protected function executeCheckoutAddressStepEnterPreCheckPlugins(AbstractTransfer $quoteTransfer): bool
     {
         foreach ($this->checkoutAddressStepEnterPreCheckPlugins as $checkoutAddressStepEnterPreCheckPlugin) {
@@ -145,6 +149,11 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
         return true;
     }
 
+    /**
+     * method to check the order name field validation
+     * @param AbstractTransfer $quoteTransfer
+     * @return bool
+     */
     protected function executeCheckoutOrderNameStepEnterPreCheckPlugins(AbstractTransfer $quoteTransfer): bool
     {
         foreach ($this->checkoutOrderNameStepEnterPreCheckPlugins as $checkoutOrderNameStepEnterPreCheckPlugin) {

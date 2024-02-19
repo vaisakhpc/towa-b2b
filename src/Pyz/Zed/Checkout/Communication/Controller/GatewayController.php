@@ -7,14 +7,7 @@
 
 namespace Pyz\Zed\Checkout\Communication\Controller;
 
-use Exception;
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\ErrorHandler\ErrorLogger;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
-use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 use Spryker\Zed\Checkout\Communication\Controller\GatewayController as SprykerGatewayController;
 
 /**
@@ -22,10 +15,13 @@ use Spryker\Zed\Checkout\Communication\Controller\GatewayController as SprykerGa
  */
 class GatewayController extends SprykerGatewayController
 {
+    /**
+     * action method to save the order name in the persistence layer
+     * 
+     */
     public function saveOrderNameAction(QuoteTransfer $quoteTransfer)
     {
         $checkoutResponseTransfer = $this->getFacade()->saveOrderName($quoteTransfer);
-
         return $checkoutResponseTransfer;
     }
 }

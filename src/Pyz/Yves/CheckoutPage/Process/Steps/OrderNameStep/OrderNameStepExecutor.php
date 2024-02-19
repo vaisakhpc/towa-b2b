@@ -9,7 +9,9 @@ use Pyz\Client\Checkout\CheckoutClientInterface;
 
 class OrderNameStepExecutor implements StepExecutorInterface
 {
-
+    /**
+     * @var \Pyz\Client\Checkout\CheckoutClientInterface
+     */
     protected $checkoutClient;
     
     public function __construct(CheckoutClientInterface $checkoutClient)

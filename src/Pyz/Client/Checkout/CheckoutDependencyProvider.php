@@ -7,10 +7,11 @@
 
 namespace Pyz\Client\Checkout;
 
-use Spryker\Client\Kernel\AbstractDependencyProvider;
-use Spryker\Client\Kernel\Container;
 use Spryker\Client\Checkout\CheckoutDependencyProvider as SprykerCheckoutDependencyProvider;
 
+/**
+ * Extending the Spryker's core CheckoutDependencyProvider with the Pyz version
+ */
 class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
 {
     

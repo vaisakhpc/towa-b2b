@@ -15,6 +15,9 @@ use Pyz\Zed\Checkout\CheckoutDependencyProvider;
  */
 class CheckoutBusinessFactory extends SprykerCheckoutBusinessFactory
 {
+    /**
+     * method to receive the quote facade from the list of dependencies
+     */
     public function getQuoteFacade()
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_QUOTE);

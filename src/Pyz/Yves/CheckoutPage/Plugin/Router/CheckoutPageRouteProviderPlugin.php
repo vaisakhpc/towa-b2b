@@ -5,6 +5,9 @@ namespace Pyz\Yves\CheckoutPage\Plugin\Router;
 use SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin as SprykerShopCheckoutPageRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
 
+/**
+ * Extending the Spryker's core class with the Pyz version
+ */
 class CheckoutPageRouteProviderPlugin extends SprykerShopCheckoutPageRouteProviderPlugin
 {
     

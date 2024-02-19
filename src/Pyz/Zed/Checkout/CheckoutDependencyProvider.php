@@ -41,6 +41,9 @@ use Spryker\Zed\ShipmentCheckoutConnector\Communication\Plugin\Checkout\Shipment
 
 class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**

@@ -4,10 +4,13 @@ namespace Pyz\Yves\CheckoutPage\Process\Steps\OrderNameStep;
 
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Symfony\Component\HttpFoundation\Request;
 
 class OrderNamePostCondition implements PostConditionCheckerInterface
 {
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @return bool
+     */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getOrderName()) {

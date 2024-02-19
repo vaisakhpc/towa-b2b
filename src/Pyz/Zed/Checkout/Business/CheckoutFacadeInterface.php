@@ -7,7 +7,6 @@
 
 namespace Pyz\Zed\Checkout\Business;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**

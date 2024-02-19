@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriter as SprykerSalesOrderWriter;
 
+/**
+ * Extending the Spryker's core class with the Pyz version
+ */
 class SalesOrderWriter extends SprykerSalesOrderWriter
 {
     /**

@@ -5,8 +5,10 @@ namespace Pyz\Yves\CheckoutPage;
 use Pyz\Yves\CheckoutPage\Form\FormFactory;
 use Pyz\Yves\CheckoutPage\Process\StepFactory;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageFactory as SprykerShopCheckoutPageFactory;
-use Pyz\Client\Checkout\CheckoutClientInterface;
 
+/**
+ * Extending the Spryker's core class with the Pyz version
+ */
 class CheckoutPageFactory extends SprykerShopCheckoutPageFactory
 {
     /**

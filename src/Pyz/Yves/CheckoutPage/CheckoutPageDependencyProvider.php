@@ -46,6 +46,9 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
      */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 
+    /**
+     * @var string
+     */
     public const CLIENT_CHECKOUT_PYZ = 'CLIENT_CHECKOUT_PYZ';
 
     /**

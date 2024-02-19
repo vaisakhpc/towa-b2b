@@ -11,7 +11,14 @@ use Pyz\Yves\CheckoutPage\CheckoutPageConfig;
 
 class OrderNameForm extends AbstractType
 {
+    /**
+     * @var string
+     */
 	const FIELD_ID_ORDER_NAME = 'order-name';
+    
+    /**
+     * @var string
+     */
 	const ORDER_NAME_PROPERTY_PATH = 'orderName';
 
 	/**

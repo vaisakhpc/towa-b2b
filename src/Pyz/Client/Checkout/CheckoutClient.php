@@ -7,10 +7,7 @@
 
 namespace Pyz\Client\Checkout;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Checkout\CheckoutClient as SprykerCheckoutClient;
 
 /**
@@ -18,6 +15,11 @@ use Spryker\Client\Checkout\CheckoutClient as SprykerCheckoutClient;
  */
 class CheckoutClient extends SprykerCheckoutClient implements CheckoutClientInterface
 {
+    /**
+     * Client method to save the order name in the database
+     * @param QuoteTransfer $quoteTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
     public function saveOrderName(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()

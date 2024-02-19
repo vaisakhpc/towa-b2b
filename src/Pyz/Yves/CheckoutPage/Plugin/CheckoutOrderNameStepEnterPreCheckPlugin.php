@@ -12,6 +12,10 @@ use Pyz\Yves\CheckoutPage\CheckoutPageConfig;
 
 class CheckoutOrderNameStepEnterPreCheckPlugin implements CheckoutOrderNameStepEnterPreCheckPluginInterface
 {
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @return bool
+     */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
         return preg_match(CheckoutPageConfig::CHECKOUT_ORDER_NAME_REGEX_PATTERN, $quoteTransfer->getOrderName());
