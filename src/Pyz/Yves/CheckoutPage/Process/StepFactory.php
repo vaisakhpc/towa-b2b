@@ -6,7 +6,6 @@ use Pyz\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin;
 use Pyz\Yves\CheckoutPage\Process\Steps\OrderNameStep;
 use Pyz\Yves\CheckoutPage\Process\Steps\OrderNameStep\OrderNameStepExecutor;
 use Pyz\Yves\CheckoutPage\Process\Steps\OrderNameStep\OrderNamePostCondition;
-use Spryker\Yves\StepEngine\Process\StepCollection;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory as SprykerShopStepFactory;
 use SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
@@ -20,9 +19,6 @@ use Pyz\Yves\CheckoutPage\Plugin\CheckoutOrderNameStepEnterPreCheckPlugin;
  */
 class StepFactory extends SprykerShopStepFactory
 {
-	/**
-	 * @return \Spryker\Yves\StepEngine\Process\StepCollectionInterface
-	 */
 	 /**
      * @return array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
@@ -48,7 +44,6 @@ class StepFactory extends SprykerShopStepFactory
 	public function createOrderNameStep()
 	{
 		return new OrderNameStep(
-			$this->getCalculationClient(),
             $this->createOrderNameStepExecutor(),
             $this->createOrderNamePostCondition(),
 			CheckoutPageRouteProviderPlugin::ROUTE_NAME_CHECKOUT_ORDER_NAME,

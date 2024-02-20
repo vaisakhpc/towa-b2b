@@ -4,7 +4,6 @@ namespace Pyz\Yves\CheckoutPage\Process\Steps;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AbstractBaseStep;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
@@ -12,11 +11,6 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 
 class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
-     */
-    protected $calculationClient;
-    
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface
      */
@@ -38,12 +32,14 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
     protected $postConditionChecker;
 
     /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
+     * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface $stepExecutor
+     * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface $postConditionChecker
      * @param string $stepRoute
      * @param string $escapeRoute
+     * @param array $checkoutAddressStepEnterPreCheckPlugins
+     * @param array $checkoutOrderNameStepEnterPreCheckPlugins
      */
     public function __construct(
-        CheckoutPageToCalculationClientInterface $calculationClient,
         StepExecutorInterface $stepExecutor,
         PostConditionCheckerInterface $postConditionChecker,
         $stepRoute,
@@ -53,7 +49,6 @@ class OrderNameStep extends AbstractBaseStep implements StepWithBreadcrumbInterf
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
-        $this->calculationClient = $calculationClient;
         $this->stepExecutor = $stepExecutor;
         $this->postConditionChecker = $postConditionChecker;
         $this->checkoutAddressStepEnterPreCheckPlugins = $checkoutAddressStepEnterPreCheckPlugins;

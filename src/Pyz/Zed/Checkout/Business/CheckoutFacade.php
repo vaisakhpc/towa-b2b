@@ -24,7 +24,7 @@ class CheckoutFacade extends SprykerCheckoutFacade implements CheckoutFacadeInte
      *
      * @throws \Exception
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function saveOrderName(QuoteTransfer $quoteTransfer)
     {
