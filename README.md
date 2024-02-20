@@ -1,184 +1,37 @@
-# Spryker B2B Demo Shop
-[![Build Status](https://github.com/spryker-shop/b2b-demo-shop/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/spryker-shop/b2b-demo-shop/actions?query=branch:master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-shop/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker-shop/b2b-demo-shop/?branch=master)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
+# Spryker B2B Demo Shop Changes for Towa 
 
 ## Description
 
-Spryker B2B Demo Shop is a collection of Spryker B2B-specific features. It suits most projects as a starting point of development and can be used to explore Spryker.
+This repo consists of the changes required by the Towa Digital's coding challenge. The steps followed for the implementation are explained below,
 
-## B2B Demo Shop quick start
+### Yves changes
 
-This section describes how to get started with the B2B Demo Shop quickly.
+* New OrderNameForm is created [src/Pyz/Yves/CheckoutPage/Form/Steps/OrderNameForm.php](src/Pyz/Yves/CheckoutPage/Form/Steps/OrderNameForm.php) to define the form inputs for the order name checkout step
+* New OrderNameStep is created [src/Pyz/Yves/CheckoutPage/Process/Steps/OrderNameStep.php](src/Pyz/Yves/CheckoutPage/Process/Steps/OrderNameStep.php) is created to specify the checkout process steps like preCondition,execute,postCondition and requireInput. 
+* [src/Pyz/Yves/CheckoutPage/Process/StepFactory.php](src/Pyz/Yves/CheckoutPage/Process/StepFactory.php) class is written to extend SprykerShop\Yves\CheckoutPage\Process\StepFactory class so that we can override the method ´getSteps´ . This is done to put the order name form as the first step in checkout process
+* Added the action method for the checkout step in the controller [src/Pyz/Yves/CheckoutPage/Controller/CheckoutController.php](src/Pyz/Yves/CheckoutPage/Controller/CheckoutController.php) and added the RouterPlugin as well for the new Yves route (yves.de.spryker.local/en/checkout/order-name)
+* Changed the Yves twig templates for accommodating the new form, adding the order name field to the order list table,etc.
 
-For detailed installation instructions, see [Installing Spryker with Docker](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/installing-spryker-with-docker.html) or [Installing with Development Virtual Machine](https://docs.spryker.com/docs/scos/dev/developer-getting-started-guide.html#installing-spryker-with-development-virtual-machine).
+### Client changes
 
-### Prerequisites
+* Extended the Client Checkout class with this new class [src/Pyz/Client/Checkout/CheckoutClient.php](src/Pyz/Client/Checkout/CheckoutClient.php) to add a new method to make a connection between Yves and Zed modules. This method will be responsible for making a call to the Zed gateway api endpoint to make sure that the provided order name is saved associated to the quote
+* new ZedStub is created to implement the call to the Zed backend api [src/Pyz/Client/Checkout/Zed/CheckoutStub.php](src/Pyz/Client/Checkout/Zed/CheckoutStub.php).
 
-For full installation prerequisites, see one of the following:
-* [Installing Docker prerequisites on MacOS](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/docker-installation-prerequisites/installing-docker-prerequisites-on-macos.html)
-* [Installing Docker prerequisites on Linux](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/docker-installation-prerequisites/installing-docker-prerequisites-on-linux.html)
-* [Installing Docker prerequisites on Windows](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/docker-installation-prerequisites/installing-docker-prerequisites-on-windows-with-wsl2.html)
+### Shared module changes
 
-Recommended system requirements for MacOS:
+* Added a new transfer file for adding the order name field to both Quote and Order transfer . The file is [src/Pyz/Yves/CheckoutPage/CheckoutPageConfig.php](src/Pyz/Yves/CheckoutPage/CheckoutPageConfig.php)
 
-|Macbook type	|vCPU	|RAM|
-|---|---|---|
-|15'|	4	|6GB|
-|13'|	2	|4GB|
+### Zed changes
 
-### Installing the B2B Demo Shop
+* Added a gateway controller [src/Pyz/Zed/Checkout/Communication/Controller/GatewayController.php](src/Pyz/Zed/Checkout/Communication/Controller/GatewayController.php) to accommodate the new method for persisting the order name
+* Added order name field also to the allowed for saving plugins [src/Pyz/Zed/Checkout/Communication/Plugin/Quote/OrderNameQuoteFieldsAllowedForSavingProviderPlugin.php](src/Pyz/Zed/Checkout/Communication/Plugin/Quote/OrderNameQuoteFieldsAllowedForSavingProviderPlugin.php)
+* Added the order_name field to the Propel schema [src/Pyz/Zed/IndexGenerator/Persistence/Propel/Schema/spy_sales.schema.xml](src/Pyz/Zed/IndexGenerator/Persistence/Propel/Schema/spy_sales.schema.xml). This along with the propel build commands will make sure that this field is made available in the sales order db table
+* The class [src/Pyz/Zed/Sales/Business/OrderWriter/SalesOrderWriter.php](src/Pyz/Zed/Sales/Business/OrderWriter/SalesOrderWriter.php) has been introduced to extend the `hydrateSalesOrderEntityTransfer` method to add order_name also to the database
+* This class [src/Pyz/Zed/Sales/Persistence/Propel/QueryBuilder/OrderSearchFilterFieldQueryBuilder.php](src/Pyz/Zed/Sales/Persistence/Propel/QueryBuilder/OrderSearchFilterFieldQueryBuilder.php) is introduced to include order_name field in the DB to be filterable and sortable in the order history table
+* This facade class [src/Pyz/Zed/Checkout/Business/CheckoutFacade.php](src/Pyz/Zed/Checkout/Business/CheckoutFacade.php) is used to extend the Spryker's core version to add the `saveOrderName` method. This method makes sure that the supplied order name is saved with the corresponding quote.
+Note: Currently used the generic updateQuote method of the quote facade to save the entire QuoteTransfer to the DB for the sake of simplicity. This could be optimized by a new Writer class in the Business Layer which internally calls an entityManager along with a Repository class (Persistence Factory) which will in turn saves only the order_name in the quote_data field of the sales_quote table.
 
-To set up the B2B Demo Shop and its environment, do the following:
+### Other changes
 
-1. Create a project folder and navigate into it:
-```bash
-mkdir spryker-b2b && cd spryker-b2b
-```
-
-2. Clone the B2B Demo Shop:
-```bash
-git clone https://github.com/spryker-shop/b2b-demo-shop.git ./
-```
-
-3. Clone the Docker SDK:
-```bash
-git clone git@github.com:spryker/docker-sdk.git docker
-```
-
-2. Set up a desired environment:
-  * [Setting up a development environment](#setting-up-a-development-environment)
-  * [Setting up a production-like environment](#setting-up-a-production-like-environment)
-
-#### Setting up a development environment
-
-1. Bootstrap the docker setup:
-
-```bash
-docker/sdk boot deploy.dev.yml
-```
-
-2. If the command you've run in the previous step returned instructions, follow them.
-
-3. Build and start the instance:
-```bash
-docker/sdk up
-```
-
-4. Switch to your branch, re-build the application with assets and demo data from the new branch:
-
-```bash
-git checkout {your_branch}
-docker/sdk boot -s deploy.dev.yml
-docker/sdk up --build --assets --data
-```
-
-> Depending on your requirements, you can select any combination of the following `up` command attributes. To fetch all the changes from the branch you switch to, we recommend running the command with all of them:
-> - `--build` - update composer, generate transfer objects, etc.
-> - `--assets` - build assets
-> - `--data` - get new demo data
-
-You've set up your Spryker B2B Demo Shop and can access your applications.
-
-
-### Setting up a production-like environment
-
-1. Bootstrap the docker setup:
-
-```bash
-docker/sdk boot -s
-```
-
-2. If the command you've run in the previous step returned instructions, follow them.
-
-3. Build and start the instance:
-```bash
-docker/sdk up
-```
-
-4. Switch to your branch in one of the following ways:
-
-  * Switch to your brunch, re-build the application with assets and demo data from the new branch:
-
-  ```bash
-  git checkout {your_branch}
-  docker/sdk boot -s
-  docker/sdk up --assets --data
-  ```
-
-  * Light git checkout:
-
-  ```bash
-  git checkout {your_branch}
-  docker/sdk boot -s
-
-  docker/sdk up
-  ```
-
-  > Depending on your requirements, you can select any combination of the following `up` command attributes. To fetch all the changes from the branch you switch to, we recommend running the command with all of them:
-  > - `--build` - update composer, generate transfer objects, etc.
-  > - `--assets` - build assets
-  > - `--data` - get new demo data
-
-5. Reload all the data:
-
-```bash
-docker/sdk clean-data && docker/sdk up && docker/sdk console q:w:s -v -s
-```
-
-
-You've set up your Spryker B2B Demo Shop and can access your applications.
-
-## Troubleshooting installation of the B2B Demo Shop
-
-This section describes the most common issues related to the installation of the B2B Demo Shop.
-
-For a complete troubleshooting, see [Troubleshooting Spryker in Docker issues](https://docs.spryker.com/docs/troubleshooting-spryker-in-docker-issues).
-
-**when**
-
-You get unexpected application behavior or errors.
-
-**then**
-
-1. Check the state of the directory:
-```bash
-git status
-```
-
-2. If there are untracked files (returned in red), and they are not necessary, remove them.
-
-3. Restart file synchronization and rebuild the codebase:
-```bash
-docker/sdk trouble
-docker/sdk boot -s deploy.dev.yml
-docker/sdk up --build --assets
-```
-
-**when**
-You do not see the expected demo data on the Storefront.
-
-**then**
-
-1. Open the [queue broker](http://queue.spryker.local) and wait until all the queues are empty.
-
-2. If the queues are empty, and the issue persists, reload the demo data:
-```bash
-docker/sdk trouble
-docker/sdk boot -s deploy.dev.yml
-docker/sdk up --build --assets --data
-```
-
-
-
-## Installation of B2B Demo Shop with Docker
-
-For detailed installation instructions of Spryker with Docker, see [Installing Spryker with Docker](https://docs.spryker.com/docs/scos/dev/setup/installing-spryker-with-docker/installing-spryker-with-docker.html).
-
-## Glue API reference
-
-See Glue API reference at [REST API reference](https://docs.spryker.com/docs/scos/dev/glue-api-guides/202108.0/rest-api-reference.html)
-
-## Contributing to the repository
-
-For contribution guidelines, see [Code contribution guide](https://docs.spryker.com/docs/scos/dev/code-contribution-guide.html#opening-pull-requests)
+* Glossary has been updated to add the translations for the labels and messages showing in both German and English languages
+* Unit tests are written for certain relevant classes using Codeception. 100% Code coverage is available for the all the classes for which tests are written. `codecept run  -c codeception.functional.yml --coverage-html` Running this command will create the coverage reports under `tests/_output/coverage` folder. Please make sure that the cli is opened using this command `docker/sdk testing -x`.

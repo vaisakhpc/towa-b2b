@@ -15,7 +15,7 @@ class CheckoutPageConfig extends SprykerCheckoutPageConfig
     /**
      * @var string
      */
-    public const CHECKOUT_ORDER_NAME_REGEX_PATTERN = '/^[a-z0-9]+$/';
+    public const CHECKOUT_ORDER_NAME_REGEX_PATTERN = '/^[a-z0-9 ]+$/';
 
     /**
      * @return array<string>
